@@ -93,11 +93,7 @@ flags.DEFINE_string('trained_checkpoint_prefix', None,
                     'path/to/model.ckpt')
 flags.DEFINE_string('output_directory', None, 'Path to write outputs.')
 
-tf.app.flags.mark_flag_as_required('pipeline_config_path')
-tf.app.flags.mark_flag_as_required('trained_checkpoint_prefix')
-tf.app.flags.mark_flag_as_required('output_directory')
 FLAGS = flags.FLAGS
-
 
 def main(_):
   pipeline_config = pipeline_pb2.TrainEvalPipelineConfig()

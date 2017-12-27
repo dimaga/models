@@ -87,16 +87,18 @@ def _build_non_max_suppressor(nms_config):
       max_total_size=nms_config.max_total_detections)
   return non_max_suppressor_fn
 
-
 def _score_converter_fn_with_logit_scale(tf_score_converter_fn, logit_scale):
   """Create a function to scale logits then apply a Tensorflow function."""
   def score_converter_fn(logits):
-    scaled_logits = tf.divide(logits, logit_scale, name='scale_logits')
+    cr = logit_scale
+    cr = tf.constant([[cr]],tf.float32)
+    print(logit_scale)
+    print(logits)
+    scaled_logits = tf.divide(logits, cr, name='scale_logits') #change logit_scale
     return tf_score_converter_fn(scaled_logits, name='convert_scores')
   score_converter_fn.__name__ = '%s_with_logit_scale' % (
       tf_score_converter_fn.__name__)
   return score_converter_fn
-
 
 def _build_score_converter(score_converter_config, logit_scale):
   """Builds score converter based on the config.
