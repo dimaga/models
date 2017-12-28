@@ -92,8 +92,6 @@ def _score_converter_fn_with_logit_scale(tf_score_converter_fn, logit_scale):
   def score_converter_fn(logits):
     cr = logit_scale
     cr = tf.constant([[cr]],tf.float32)
-    print(logit_scale)
-    print(logits)
     scaled_logits = tf.divide(logits, cr, name='scale_logits') #change logit_scale
     return tf_score_converter_fn(scaled_logits, name='convert_scores')
   score_converter_fn.__name__ = '%s_with_logit_scale' % (
